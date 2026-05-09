@@ -2,385 +2,146 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Acer Predator Helios 300 - Linux Fan Control Guide</title>
+    <title>JARVIS — Advanced OS</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 20px;
-        }
-
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
-            overflow: hidden;
-        }
-
-        header {
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-            color: white;
-            padding: 40px 20px;
-            text-align: center;
-        }
-
-        header h1 {
-            font-size: 2.5em;
-            margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-        }
-
-        header p {
-            font-size: 1.1em;
-            opacity: 0.9;
-        }
-
-        main {
-            padding: 40px;
-        }
-
-        section {
-            margin-bottom: 40px;
-        }
-
-        h2 {
-            color: #667eea;
-            font-size: 1.8em;
-            margin-bottom: 15px;
-            border-bottom: 3px solid #667eea;
-            padding-bottom: 10px;
-        }
-
-        h3 {
-            color: #764ba2;
-            font-size: 1.3em;
-            margin-top: 20px;
-            margin-bottom: 10px;
-        }
-
-        p {
-            margin-bottom: 15px;
-            color: #555;
-            line-height: 1.8;
-        }
-
-        .warning {
-            background: #fff3cd;
-            border-left: 5px solid #ffc107;
-            padding: 15px;
-            margin: 20px 0;
-            border-radius: 5px;
-        }
-
-        .warning strong {
-            color: #ff6b6b;
-        }
-
-        .info {
-            background: #e7f3ff;
-            border-left: 5px solid #2196F3;
-            padding: 15px;
-            margin: 20px 0;
-            border-radius: 5px;
-        }
-
-        code {
-            background: #f5f5f5;
-            padding: 2px 6px;
-            border-radius: 3px;
-            font-family: 'Courier New', monospace;
-            color: #d63384;
-        }
-
-        .code-block {
-            background: #1e1e1e;
-            color: #d4d4d4;
-            padding: 20px;
-            border-radius: 5px;
-            overflow-x: auto;
-            margin: 15px 0;
-            font-family: 'Courier New', monospace;
-            font-size: 0.95em;
-            line-height: 1.4;
-        }
-
-        .code-block code {
-            background: none;
-            color: inherit;
-            padding: 0;
-        }
-
-        .command {
-            color: #4EC9B0;
-            margin: 8px 0;
-        }
-
-        .steps {
-            background: #f9f9f9;
-            padding: 20px;
-            border-radius: 5px;
-            margin: 15px 0;
-        }
-
-        .steps ol {
-            margin-left: 20px;
-        }
-
-        .steps li {
-            margin: 10px 0;
-        }
-
-        .device-info {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 20px;
-            border-radius: 5px;
-            margin: 15px 0;
-        }
-
-        .device-info h3 {
-            color: white;
-            margin-top: 0;
-        }
-
-        footer {
-            background: #f5f5f5;
-            padding: 20px;
-            text-align: center;
-            color: #666;
-            border-top: 1px solid #ddd;
-        }
-
-        .copy-btn {
-            background: #667eea;
-            color: white;
-            border: none;
-            padding: 8px 15px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 0.9em;
-            margin-left: 10px;
-            transition: background 0.3s;
-        }
-
-        .copy-btn:hover {
-            background: #764ba2;
-        }
-
-        .command-wrapper {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin: 8px 0;
-        }
-
-        ul {
-            margin-left: 20px;
-        }
-
-        ul li {
-            margin: 8px 0;
-        }
-
-        a {
-            color: #667eea;
-            text-decoration: none;
-        }
-
-        a:hover {
-            text-decoration: underline;
-        }
-
-        @media (max-width: 768px) {
-            header h1 {
-                font-size: 1.8em;
-            }
-
-            main {
-                padding: 20px;
-            }
-
-            h2 {
-                font-size: 1.4em;
-            }
-
-            .command-wrapper {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-
-            .copy-btn {
-                margin-left: 0;
-                margin-top: 10px;
-            }
+        /* Add this to your existing CSS for a "pulse" effect during listening */
+        .orb.listening {
+            box-shadow: 0 0 50px #ff4466;
+            border-color: #ff4466;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>🔧 Acer Predator Helios 300 Fan Control</h1>
-            <p>Linux Fan Control Guide for PH315-51</p>
-        </header>
-
-        <main>
-            <section>
-                <h2>📋 Overview</h2>
-                <p>This guide provides step-by-step instructions to enable manual fan control on your Acer Predator Helios 300 (PH315-51) laptop running Linux. Control your system's cooling performance with precision.</p>
-                
-                <div class="device-info">
-                    <h3>📱 Device Information</h3>
-                    <p><strong>Model:</strong> Acer Predator Helios 300 PH315-51</p>
-                    <p><strong>Operating System:</strong> Linux</p>
-                    <p><strong>Tools Required:</strong> nbfc-linux, ec_sys module</p>
-                </div>
-            </section>
-
-            <section>
-                <h2>⚠️ Important Warning</h2>
-                <div class="warning">
-                    <strong>⚡ CAUTION:</strong> This process involves modifying kernel modules and directly writing to the embedded controller (EC). Improper configuration could damage your hardware or cause system instability. Proceed only if you understand the risks and are comfortable working at the kernel level.
-                </div>
-            </section>
-
-            <section>
-                <h2>🚀 Installation & Setup</h2>
-                
-                <h3>Step 1: Install nbfc-linux</h3>
-                <p>First, install the NBFC (Notebook FanControl) package for Linux:</p>
-                <div class="code-block">
-                    <div class="command-wrapper">
-                        <code class="command">yay -S nbfc-linux</code>
-                        <button class="copy-btn" onclick="copyToClipboard('yay -S nbfc-linux')">Copy</button>
-                    </div>
-                </div>
-                <p><strong>Note:</strong> If you're not using Arch Linux, use your distribution's package manager (apt, dnf, etc.) to install nbfc-linux or equivalent.</p>
-
-                <h3>Step 2: Load Kernel Modules with Write Support</h3>
-                <p>Enable write support for the EC (Embedded Controller) system module:</p>
-                <div class="code-block">
-                    <div class="command-wrapper">
-                        <code class="command">sudo su</code>
-                        <button class="copy-btn" onclick="copyToClipboard('sudo su')">Copy</button>
-                    </div>
-                    <div class="command-wrapper">
-                        <code class="command">modprobe -r ec_sys</code>
-                        <button class="copy-btn" onclick="copyToClipboard('modprobe -r ec_sys')">Copy</button>
-                    </div>
-                    <div class="command-wrapper">
-                        <code class="command">modprobe ec_sys write_support=1</code>
-                        <button class="copy-btn" onclick="copyToClipboard('modprobe ec_sys write_support=1')">Copy</button>
-                    </div>
-                </div>
-
-                <h3>Step 3: Configure EC Probe Values</h3>
-                <p>Write the configuration values to the embedded controller:</p>
-                <div class="code-block">
-                    <div class="command-wrapper">
-                        <code class="command">ec_probe write 0x21 0x30</code>
-                        <button class="copy-btn" onclick="copyToClipboard('ec_probe write 0x21 0x30')">Copy</button>
-                    </div>
-                    <div class="command-wrapper">
-                        <code class="command">ec_probe write 0x22 0x0c</code>
-                        <button class="copy-btn" onclick="copyToClipboard('ec_probe write 0x22 0x0c')">Copy</button>
-                    </div>
-                    <div class="command-wrapper">
-                        <code class="command">ec_probe write 0x37 0x[value]</code>
-                        <button class="copy-btn" onclick="copyToClipboard('ec_probe write 0x37 0x[value]')">Copy</button>
-                    </div>
-                    <div class="command-wrapper">
-                        <code class="command">ec_probe write 0x3a 0x[value]</code>
-                        <button class="copy-btn" onclick="copyToClipboard('ec_probe write 0x3a 0x[value]')">Copy</button>
-                    </div>
-                </div>
-                <p><strong>Note:</strong> Replace <code>[value]</code> with your desired fan speed values (typically between 0x00 and 0xFF).</p>
-            </section>
-
-            <section>
-                <h2>📊 EC Probe Values Reference</h2>
-                <div class="info">
-                    <h3>Common Register Addresses:</h3>
-                    <ul>
-                        <li><code>0x21</code> - Primary control register</li>
-                        <li><code>0x22</code> - Secondary control register</li>
-                        <li><code>0x37</code> - Fan speed parameter 1</li>
-                        <li><code>0x3a</code> - Fan speed parameter 2</li>
-                    </ul>
-                </div>
-            </section>
-
-            <section>
-                <h2>✅ Quick Reference</h2>
-                <div class="steps">
-                    <h3>All Commands in Order:</h3>
-                    <ol>
-                        <li>Install nbfc-linux: <code>yay -S nbfc-linux</code></li>
-                        <li>Gain root access: <code>sudo su</code></li>
-                        <li>Unload ec_sys: <code>modprobe -r ec_sys</code></li>
-                        <li>Reload with write support: <code>modprobe ec_sys write_support=1</code></li>
-                        <li>Write configuration values using ec_probe commands</li>
-                    </ol>
-                </div>
-            </section>
-
-            <section>
-                <h2>🛠️ Troubleshooting</h2>
-                <h3>Module Not Found</h3>
-                <p>If <code>ec_sys</code> module is not available, ensure your kernel is compiled with embedded controller support. Check with your Linux distribution.</p>
-
-                <h3>Permission Denied</h3>
-                <p>Make sure you're running commands with proper sudo privileges. The <code>ec_probe</code> command typically requires root access.</p>
-
-                <h3>Reverting Changes</h3>
-                <p>To revert to default settings, unload the module and reload without write support:</p>
-                <div class="code-block">
-                    <div class="command-wrapper">
-                        <code class="command">modprobe -r ec_sys</code>
-                        <button class="copy-btn" onclick="copyToClipboard('modprobe -r ec_sys')">Copy</button>
-                    </div>
-                    <div class="command-wrapper">
-                        <code class="command">modprobe ec_sys</code>
-                        <button class="copy-btn" onclick="copyToClipboard('modprobe ec_sys')">Copy</button>
-                    </div>
-                </div>
-            </section>
-
-            <section>
-                <h2>📚 Resources</h2>
-                <ul>
-                    <li><a href="https://github.com/nbfc-linux/nbfc-linux" target="_blank">NBFC Linux GitHub Repository</a></li>
-                    <li><a href="https://wiki.archlinux.org/" target="_blank">Arch Linux Wiki</a></li>
-                    <li><a href="https://gist.github.com/namanguptasn-ux/4fcdb961dcdea4c9bf5e77721672d996" target="_blank">Original Gist</a></li>
-                </ul>
-            </section>
-        </main>
-
-        <footer>
-            <p>🔗 Generated from your Gist | Last Updated: May 9, 2026</p>
-            <p style="margin-top: 10px; font-size: 0.9em;">Created by <a href="https://github.com/namanguptasn-ux" target="_blank">@namanguptasn-ux</a></p>
-        </footer>
-    </div>
-
     <script>
-        function copyToClipboard(text) {
-            navigator.clipboard.writeText(text).then(() => {
-                alert('Copied to clipboard: ' + text);
-            }).catch(err => {
-                console.error('Failed to copy: ', err);
-            });
+        /**
+         * JARVIS CORE ENGINE
+         * Using Web Speech API (Synthesis & Recognition)
+         */
+        const JarvisConfig = {
+            wakeWord: "hey jarvis",
+            model: "claude-3-5-sonnet", // Placeholder for logic
+            isListening: false,
+            isSpeaking: false
+        };
+
+        // Initialize Speech Recognition
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        const recognition = SpeechRecognition ? new SpeechRecognition() : null;
+        const synth = window.speechSynthesis;
+
+        if (recognition) {
+            recognition.continuous = false; // Set to true for "always listening"
+            recognition.interimResults = false;
+            recognition.lang = 'en-US';
         }
+
+        /**
+         * 1. THE VOICE: TEXT-TO-SPEECH
+         */
+        function speak(text) {
+            // Cancel any ongoing speech
+            synth.cancel();
+
+            const utterance = new SpeechSynthesisUtterance(text);
+            
+            // JARVIS Personality Settings
+            utterance.rate = 1.0; 
+            utterance.pitch = 0.9; // Slightly lower for a "sophisticated" tone
+
+            // Select a British Male voice if available
+            const voices = synth.getVoices();
+            const jarvisVoice = voices.find(v => v.name.includes("Google UK English Male") || v.name.includes("Daniel"));
+            if (jarvisVoice) utterance.voice = jarvisVoice;
+
+            utterance.onstart = () => setOrbState('speaking');
+            utterance.onend = () => {
+                setOrbState('idle');
+                // Auto-resume wake word detection after JARVIS finishes speaking
+                if (JarvisConfig.wakeActive) startWakeWordMonitor();
+            };
+
+            synth.speak(utterance);
+        }
+
+        /**
+         * 2. THE EARS: SPEECH-TO-TEXT
+         */
+        function startListening() {
+            if (!recognition) {
+                updateStatus("Browser not supported", "red");
+                return;
+            }
+
+            try {
+                recognition.start();
+                setOrbState('listening');
+            } catch (e) {
+                console.error("Recognition already started or blocked:", e);
+            }
+        }
+
+        recognition.onresult = (event) => {
+            const transcript = event.results[0][0].transcript.toLowerCase();
+            updateTranscript(transcript);
+            handleCommand(transcript);
+        };
+
+        recognition.onerror = (event) => {
+            console.error("Speech Error:", event.error);
+            setOrbState('idle');
+            if(event.error === 'not-allowed') {
+                alert("Please enable Microphone access in your browser settings and use HTTPS.");
+            }
+        };
+
+        /**
+         * 3. THE BRAIN: COMMAND HANDLING
+         */
+        async function handleCommand(command) {
+            setOrbState('thinking');
+            
+            // Logic for local commands vs AI API calls
+            if (command.includes("time")) {
+                const now = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+                speak(`The current time is ${now}, sir.`);
+            } 
+            else if (command.includes("system status")) {
+                speak("All systems are functional. Connection to neural grid is stable.");
+            }
+            else {
+                // Here you would normally fetch from your OpenAI/Claude API
+                // For now, we simulate a response
+                simulateAIResponse(command);
+            }
+        }
+
+        // --- Helper Functions ---
+        function setOrbState(state) {
+            const orb = document.getElementById('orb');
+            orb.className = 'orb ' + state;
+            // Update label/icons based on your existing UI logic
+        }
+
+        function updateTranscript(text) {
+            document.getElementById('transcript-box').innerText = text;
+        }
+
+        function updateStatus(msg, color) {
+            const status = document.getElementById('wake-status');
+            status.style.color = `var(--${color})`;
+            status.innerText = msg;
+        }
+
+        async function simulateAIResponse(input) {
+            // This is where you would call your API
+            setTimeout(() => {
+                speak("Processing your request. I've analyzed the query regarding " + input);
+            }, 1000);
+        }
+
+        // Initialize voices
+        window.speechSynthesis.onvoiceschanged = () => synth.getVoices();
+
     </script>
 </body>
 </html>
